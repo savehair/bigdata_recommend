@@ -242,25 +242,9 @@ def part4_director_actor(df: pd.DataFrame, outdir: Path) -> dict:
     corr = sub["actor_count"].corr(sub["Rating"])
     result["actor_count_rating_corr"] = float(corr)
 
-    # 原始散点图在本数据里会很怪（actor_count 基本都一样），
-    # 这里改成“按演员人数分组后的平均评分图”，更容易解释。
-    group_stat = (
-        sub.groupby("actor_count")["Rating"]
-        .agg(avg_rating="mean", movie_count="count")
-        .reset_index()
-        .sort_values("actor_count")
-    )
-
-    plt.figure(figsize=(8, 5))
-    ax = sns.barplot(data=group_stat, x="actor_count", y="avg_rating", color="#4C72B0")
-    plt.title("Average Rating by Actor Count")
-    plt.xlabel("actor_count")
-    plt.ylabel("avg_rating")
-
-    # 在柱子上标注样本数，防止小样本误导
-    for i, row in group_stat.reset_index(drop=True).iterrows():
-        ax.text(i, row["avg_rating"] + 0.03, f"n={int(row['movie_count'])}", ha="center", va="bottom", fontsize=9)
-
+    plt.figure(figsize=(7, 5))
+    sns.regplot(data=sub, x="actor_count", y="Rating", scatter_kws={"alpha": 0.6})
+    plt.title("Actor Count vs Rating")
     plt.tight_layout()
     plt.savefig(outdir / "part4_actor_count_rating_relation.png", dpi=150)
     plt.close()
