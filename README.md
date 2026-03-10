@@ -22,8 +22,10 @@ python movie_analysis_and_recommendation.py
 
 运行后会提示输入路径，也可以直接回车使用默认值：
 - `IMDB-Movie-Data.csv`
-- `movies-rating.csv`
+- `movies-rating.pkl`
 - `outputs`
+
+评分数据读取支持 `movies-rating.pkl`（推荐）和 `movies-rating.csv`。
 
 ## 输出结果
 

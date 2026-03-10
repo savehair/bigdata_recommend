@@ -449,6 +449,14 @@ def part7_recommendation(ratings: pd.DataFrame) -> dict:
     return result
 
 
+def load_ratings_file(ratings_path: Path) -> pd.DataFrame:
+    """读取评分数据：支持 .pkl 和 .csv。"""
+    ext = ratings_path.suffix.lower()
+    if ext == ".pkl":
+        return pd.read_pickle(ratings_path)
+    return pd.read_csv(ratings_path)
+
+
 def run_all(imdb_path: Path, ratings_path: Path, outdir: Path) -> dict:
     """总流程函数：读取数据 -> 分模块计算 -> 保存结果。"""
     outdir = make_output_dir(outdir)
@@ -467,7 +475,7 @@ def run_all(imdb_path: Path, ratings_path: Path, outdir: Path) -> dict:
         "6_clustering": part6_kmeans(imdb, outdir),
     }
 
-    ratings = pd.read_csv(ratings_path)
+    ratings = load_ratings_file(ratings_path)
     results["7_recommendation"] = part7_recommendation(ratings)
 
     # 输出 json，便于写实验报告时直接引用
@@ -488,11 +496,11 @@ def main():
     print("直接回车就用默认文件名。")
 
     imdb_input = input("请输入 IMDB 数据文件路径 [默认: IMDB-Movie-Data.csv]: ").strip()
-    ratings_input = input("请输入评分数据文件路径 [默认: movies-rating.csv]: ").strip()
+    ratings_input = input("请输入评分数据文件路径 [默认: movies-rating.pkl]: ").strip()
     outdir_input = input("请输入输出目录 [默认: outputs]: ").strip()
 
     imdb_path = Path(imdb_input) if imdb_input else Path("IMDB-Movie-Data.csv")
-    ratings_path = Path(ratings_input) if ratings_input else Path("movies-rating.csv")
+    ratings_path = Path(ratings_input) if ratings_input else Path("movies-rating.pkl")
     outdir_path = Path(outdir_input) if outdir_input else Path("outputs")
 
     run_all(imdb_path, ratings_path, outdir_path)
