@@ -1,32 +1,38 @@
-# 电影数据分析与推荐（Python脚本版）
+# 电影数据分析与推荐（课程作业版）
 
-本仓库提供 `movie_analysis_and_recommendation.py`，用于完成题目中的 7 个部分：
+这是一个偏“大学生作业风格”的完整实现，代码里加入了较详细中文注释，便于老师检查和同学阅读。
 
-1. IMDB 数据读取与预处理
-2. 数据探索与统计分析
-3. 电影类型分析
-4. 导演和演员分析
-5. 年份与时长分析
-6. KMeans 聚类（5类）+ 轮廓系数
-7. 基于 `movies-rating` 的协同过滤推荐（余弦/皮尔逊）
+## 已覆盖内容
 
-## 运行方式
+- 数据读取和预处理（缺失值、类型转换、去重）
+- 数据探索统计（电影数、导演数、演员数等）
+- Votes 分布统计与可视化
+- Revenue 与 Rating 关系分析与可视化
+- 电影类型数量分布、时长分类下的类型评分分析、类型票房分析
+- 导演/演员频次分析（含 2016 年）
+- 年份分布、时长分布、年份与评分关系
+- KMeans 聚类为 5 类 + 轮廓系数
+- 基于 movies-rating 的用户协同过滤推荐（余弦/皮尔逊）
+
+## 运行命令
 
 ```bash
-python movie_analysis_and_recommendation.py \
-  --imdb IMDB-Movie-Data.csv \
-  --ratings movies-rating.csv \
-  --outdir outputs
+python movie_analysis_and_recommendation.py
 ```
 
-## 输出内容
+运行后会提示输入路径，也可以直接回车使用默认值：
+- `IMDB-Movie-Data.csv`
+- `movies-rating.pkl`
+- `outputs`
 
-- `outputs/analysis_results.json`：所有题目对应的核心统计结果。
-- 多张 PNG 可视化图（如评分人数分布、票房与评分关系、年份分布、聚类散点图等）。
+评分数据读取支持 `movies-rating.pkl`（推荐）和 `movies-rating.csv`。
 
-## 依赖
+## 输出结果
 
-建议 Python 3.9+，并安装：
+- `outputs/analysis_results.json`：各题的统计结果和推荐结果
+- `outputs/*.png`：对应题目的可视化图
+
+## 依赖安装
 
 ```bash
 pip install pandas numpy matplotlib seaborn scikit-learn
