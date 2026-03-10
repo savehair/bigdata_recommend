@@ -30,7 +30,7 @@ python movie_analysis_and_recommendation.py
 ## 输出结果
 
 - `outputs/analysis_results.json`：各题的统计结果和推荐结果
-- `outputs/*.png`：对应题目的可视化图（含第三部分新增评分图 `part3_avg_rating_by_genre_runtime.png`、`part4_actor_count_rating_relation.png`）
+- `outputs/*.png`：对应题目的可视化图（含第三部分新增评分图 `part3_avg_rating_by_genre_runtime.png`）
 
 ## 依赖安装
 
