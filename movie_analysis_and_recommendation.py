@@ -179,6 +179,26 @@ def part3_genre_analysis(df: pd.DataFrame, outdir: Path) -> dict:
             }
     result["lowest_genre_by_runtime_type"] = lowest_each_runtime
 
+    # 评分可视化：展示不同“时长类别-电影类型”的平均评分
+    # 为了图表可读性，只展示数量最多的前10个类型
+    top10_genres = genre_counts.head(10).index.tolist()
+    rating_for_plot = (
+        explode_temp[explode_temp["Genre"].isin(top10_genres)]
+        .dropna(subset=["runtime_type", "Rating"])
+        .groupby(["Genre", "runtime_type"])["Rating"]
+        .mean()
+        .reset_index()
+    )
+
+    if not rating_for_plot.empty:
+        plt.figure(figsize=(12, 6))
+        sns.barplot(data=rating_for_plot, x="Genre", y="Rating", hue="runtime_type")
+        plt.title("Average Rating by Genre and Runtime Type (Top 10 Genres)")
+        plt.xticks(rotation=30, ha="right")
+        plt.tight_layout()
+        plt.savefig(outdir / "part3_avg_rating_by_genre_runtime.png", dpi=150)
+        plt.close()
+
     # 不同类型平均票房
     avg_revenue = (
         explode_temp.dropna(subset=["Revenue (Millions)"])
