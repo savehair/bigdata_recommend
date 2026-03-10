@@ -11,13 +11,10 @@
 7) 电影推荐（余弦相似度、皮尔逊相似度）
 
 运行示例：
-python movie_analysis_and_recommendation.py \
-  --imdb IMDB-Movie-Data.csv \
-  --ratings movies-rating.csv \
-  --outdir outputs
+python movie_analysis_and_recommendation.py
+（运行后按提示输入路径，或直接回车使用默认值）
 """
 
-import argparse
 import json
 from pathlib import Path
 
@@ -486,13 +483,19 @@ def run_all(imdb_path: Path, ratings_path: Path, outdir: Path) -> dict:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="电影数据分析与推荐（课程作业版）")
-    parser.add_argument("--imdb", type=Path, default=Path("IMDB-Movie-Data.csv"), help="IMDB 电影数据CSV路径")
-    parser.add_argument("--ratings", type=Path, default=Path("movies-rating.csv"), help="用户评分数据CSV路径")
-    parser.add_argument("--outdir", type=Path, default=Path("outputs"), help="输出目录")
-    args = parser.parse_args()
+    """主函数：用最直观（比较“笨”）的方式让同学输入路径。"""
+    print("电影数据分析与推荐（课程作业版）")
+    print("直接回车就用默认文件名。")
 
-    run_all(args.imdb, args.ratings, args.outdir)
+    imdb_input = input("请输入 IMDB 数据文件路径 [默认: IMDB-Movie-Data.csv]: ").strip()
+    ratings_input = input("请输入评分数据文件路径 [默认: movies-rating.csv]: ").strip()
+    outdir_input = input("请输入输出目录 [默认: outputs]: ").strip()
+
+    imdb_path = Path(imdb_input) if imdb_input else Path("IMDB-Movie-Data.csv")
+    ratings_path = Path(ratings_input) if ratings_input else Path("movies-rating.csv")
+    outdir_path = Path(outdir_input) if outdir_input else Path("outputs")
+
+    run_all(imdb_path, ratings_path, outdir_path)
 
 
 if __name__ == "__main__":

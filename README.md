@@ -17,11 +17,13 @@
 ## 运行命令
 
 ```bash
-python movie_analysis_and_recommendation.py \
-  --imdb IMDB-Movie-Data.csv \
-  --ratings movies-rating.csv \
-  --outdir outputs
+python movie_analysis_and_recommendation.py
 ```
+
+运行后会提示输入路径，也可以直接回车使用默认值：
+- `IMDB-Movie-Data.csv`
+- `movies-rating.csv`
+- `outputs`
 
 ## 输出结果
 
